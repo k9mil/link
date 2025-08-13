@@ -3,14 +3,25 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Mock moon landing data
+// Mock moon landing data with connections
 const mockNodes = [
-  { id: 1, title: "Apollo 11 Launch Date", position: [0, 0, 0] as [number, number, number], status: "verified", info: "Apollo 11 launched on July 16, 1969", sources: ["NASA Archives", "Historical Records"] },
-  { id: 2, title: "Neil Armstrong First Steps", position: [-3, 2, 1] as [number, number, number], status: "verified", info: "Neil Armstrong was first human on moon", sources: ["NASA Transcripts", "Video Evidence"] },
-  { id: 3, title: "Lunar Module Landing", position: [2, -1, -2] as [number, number, number], status: "verified", info: "Eagle landed in Sea of Tranquility", sources: ["Mission Control Logs"] },
-  { id: 4, title: "Shadows Direction", position: [-2, -2, 3] as [number, number, number], status: "ambiguous", info: "Debate about shadow directions in photos", sources: ["Photo Analysis"] },
-  { id: 5, title: "Flag Movement", position: [3, 3, -1] as [number, number, number], status: "ambiguous", info: "Flag appears to wave in no atmosphere", sources: ["Conspiracy Theories", "Physics Analysis"] },
-  { id: 6, title: "Studio Recording Theory", position: [-4, 1, -3] as [number, number, number], status: "unverified", info: "Claims of staged moon landing", sources: ["Conspiracy Websites"] },
+  { id: 1, title: "Apollo 11 Launch Date", position: [0, 0, 0] as [number, number, number], status: "verified", info: "Apollo 11 launched on July 16, 1969 from Kennedy Space Center at 13:32 UTC. The mission was the culmination of the Apollo program and represented humanity's first attempt to land on the Moon. The launch vehicle was a Saturn V rocket, standing 363 feet tall and weighing 6.2 million pounds when fully fueled.", sources: ["NASA Archives", "Historical Records", "Kennedy Space Center Logs"] },
+  { id: 2, title: "Neil Armstrong First Steps", position: [-3, 2, 1] as [number, number, number], status: "verified", info: "Neil Armstrong was the first human to step onto the lunar surface on July 20, 1969 at 20:17 UTC. His famous words 'That's one small step for man, one giant leap for mankind' were transmitted to Earth and heard by an estimated 650 million people worldwide. The moment was captured on video and transmitted via the lunar module's camera.", sources: ["NASA Transcripts", "Video Evidence", "Mission Audio Logs", "TV Broadcast Records"] },
+  { id: 3, title: "Lunar Module Landing", position: [2, -1, -2] as [number, number, number], status: "verified", info: "The Eagle lunar module successfully landed in the Sea of Tranquility at coordinates 0°40′27″N 23°28′23″E on July 20, 1969. The landing was manually piloted by Neil Armstrong after the automatic guidance system was taking them toward a boulder field. They had only 17 seconds of fuel remaining when they touched down.", sources: ["Mission Control Logs", "Lunar Landing Telemetry", "Post-Mission Reports"] },
+  { id: 4, title: "Shadows Direction", position: [-2, -2, 3] as [number, number, number], status: "ambiguous", info: "Some photographs from the lunar surface show shadows that appear to point in different directions, leading to debates about lighting sources. While conspiracy theorists claim this proves studio lighting, scientists explain this is due to the uneven lunar surface, multiple light sources (Earth reflection, lunar module), and the lack of atmospheric scattering on the Moon.", sources: ["Photo Analysis Studies", "Lunar Photography Research", "Optics Experts"] },
+  { id: 5, title: "Flag Movement", position: [3, 3, -1] as [number, number, number], status: "ambiguous", info: "The American flag planted on the lunar surface appears to wave in some footage, despite the Moon's lack of atmosphere. NASA explains this movement was caused by the astronauts' manipulation of the flagpole and the flag's horizontal support rod. The flag's apparent movement stops when the astronauts stop touching the pole.", sources: ["NASA Technical Reports", "Physics Analysis", "Video Frame Analysis"] },
+  { id: 6, title: "Studio Recording Theory", position: [-4, 1, -3] as [number, number, number], status: "unverified", info: "Claims that the moon landing was filmed in a studio, possibly directed by Stanley Kubrick. These theories cite various 'anomalies' in the footage and photographs. However, extensive analysis by independent researchers, the existence of retroreflectors placed on the Moon, and the sheer complexity of faking the evidence in 1969 make this highly implausible.", sources: ["Conspiracy Theory Websites", "Debunking Studies", "Independent Research"] },
+];
+
+// Connections between related nodes
+const connections = [
+  { from: 1, to: 2 }, // Launch to First Steps
+  { from: 1, to: 3 }, // Launch to Landing
+  { from: 2, to: 3 }, // First Steps to Landing
+  { from: 3, to: 4 }, // Landing to Shadows
+  { from: 3, to: 5 }, // Landing to Flag
+  { from: 4, to: 6 }, // Shadows to Studio Theory
+  { from: 5, to: 6 }, // Flag to Studio Theory
 ];
 
 interface NodeProps {
@@ -36,7 +47,7 @@ const Node = ({ node, onClick }: NodeProps) => {
   const getColor = () => {
     switch (node.status) {
       case 'verified': return '#22c55e';
-      case 'ambiguous': return '#f59e0b';
+      case 'ambiguous': return '#ff8c00';
       case 'unverified': return '#ef4444';
       default: return '#6b7280';
     }
@@ -66,6 +77,25 @@ const Node = ({ node, onClick }: NodeProps) => {
   );
 };
 
+// Connection line component
+const ConnectionLine = ({ from, to }: { from: [number, number, number], to: [number, number, number] }) => {
+  const points = [new THREE.Vector3(...from), new THREE.Vector3(...to)];
+  
+  return (
+    <line>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={points.length}
+          array={new Float32Array(points.flatMap(p => [p.x, p.y, p.z]))}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <lineBasicMaterial color="#6b7280" opacity={0.3} transparent />
+    </line>
+  );
+};
+
 const FactGraph = () => {
   const [selectedNode, setSelectedNode] = useState<typeof mockNodes[0] | null>(null);
 
@@ -75,6 +105,22 @@ const FactGraph = () => {
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
         <OrbitControls />
+        
+        {/* Render connections */}
+        {connections.map((connection, index) => {
+          const fromNode = mockNodes.find(n => n.id === connection.from);
+          const toNode = mockNodes.find(n => n.id === connection.to);
+          if (fromNode && toNode) {
+            return (
+              <ConnectionLine 
+                key={index} 
+                from={fromNode.position} 
+                to={toNode.position} 
+              />
+            );
+          }
+          return null;
+        })}
         
         {mockNodes.map((node) => (
           <Node key={node.id} node={node} onClick={setSelectedNode} />

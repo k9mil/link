@@ -10,19 +10,21 @@ const Landing = () => {
       <section className="hero-gradient py-20 px-4">
         <div className="container mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6 text-foreground">
-            FactGraph
+            Link
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             AI-powered fact verification with interactive knowledge graphs. 
             Upload documents or text to visualize and verify information instantly.
           </p>
           <div className="flex gap-4 justify-center">
-            <Link to="/dashboard">
+            <Link to="/knowledge">
               <Button size="lg" className="primary-gradient text-white">
-                Get Started
+                Try Knowledge Graph
               </Button>
             </Link>
-            <Button variant="outline" size="lg">Learn More</Button>
+            <Link to="/dashboard">
+              <Button variant="outline" size="lg">View Dashboard</Button>
+            </Link>
           </div>
         </div>
       </section>
