@@ -2,12 +2,12 @@ import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 const data = [
-  { month: "Jan", verified: 45, ambiguous: 12, unverified: 8 },
-  { month: "Feb", verified: 52, ambiguous: 15, unverified: 6 },
-  { month: "Mar", verified: 67, ambiguous: 18, unverified: 9 },
-  { month: "Apr", verified: 73, ambiguous: 14, unverified: 7 },
-  { month: "May", verified: 84, ambiguous: 20, unverified: 11 },
-  { month: "Jun", verified: 92, ambiguous: 16, unverified: 5 },
+  { month: "Jan", verified: 8, ambiguous: 3, unverified: 1 },
+  { month: "Feb", verified: 12, ambiguous: 4, unverified: 2 },
+  { month: "Mar", verified: 15, ambiguous: 5, unverified: 3 },
+  { month: "Apr", verified: 18, ambiguous: 3, unverified: 1 },
+  { month: "May", verified: 22, ambiguous: 6, unverified: 2 },
+  { month: "Jun", verified: 25, ambiguous: 4, unverified: 1 },
 ];
 
 const chartConfig = {

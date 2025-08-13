@@ -237,32 +237,34 @@ const FactGraph = () => {
 
       {/* Details Panel */}
       {selectedNode && (
-        <div className="absolute top-4 left-4 w-96 bg-card border rounded-lg p-4 shadow-lg max-h-[500px] overflow-y-auto">
-          <div className="flex items-center gap-2 mb-3">
+        <div className="absolute top-4 left-4 w-96 bg-card border rounded-lg p-6 shadow-lg max-h-[500px] overflow-y-auto">
+          <div className="flex items-center gap-3 mb-4">
             <div 
-              className={`w-3 h-3 rounded-full ${
+              className={`w-4 h-4 rounded-full ${
                 selectedNode.status === 'verified' ? 'bg-verified' :
                 selectedNode.status === 'ambiguous' ? 'bg-ambiguous' : 'bg-unverified'
               }`}
             />
-            <span className="font-semibold capitalize">{selectedNode.status}</span>
+            <span className="font-semibold capitalize text-lg">{selectedNode.status}</span>
           </div>
-          <h3 className="font-bold text-lg mb-3">{selectedNode.title}</h3>
           
-          <div className="prose prose-sm max-w-none mb-4">
+          <h3 className="font-bold text-xl mb-4">{selectedNode.title}</h3>
+          
+          <div className="prose prose-sm max-w-none mb-6 leading-relaxed">
             <ReactMarkdown>{selectedNode.info}</ReactMarkdown>
           </div>
           
-          <div>
-            <h4 className="font-medium mb-2">Sources:</h4>
-            <ul className="space-y-1">
+          <div className="border-t pt-4">
+            <h4 className="font-semibold text-base mb-3">Sources:</h4>
+            <ul className="space-y-2">
               {selectedNode.sources.map((source, i) => (
-                <li key={i}>
+                <li key={i} className="flex items-start">
+                  <span className="text-muted-foreground mr-2">•</span>
                   <a 
                     href={source.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-sm text-blue-600 hover:text-blue-800 underline"
+                    className="text-blue-600 hover:text-blue-800 underline text-sm leading-relaxed"
                   >
                     {source.name}
                   </a>
@@ -270,9 +272,10 @@ const FactGraph = () => {
               ))}
             </ul>
           </div>
+          
           <button
             onClick={() => setSelectedNode(null)}
-            className="absolute top-2 right-2 text-muted-foreground hover:text-foreground"
+            className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted rounded-full transition-colors"
           >
             ✕
           </button>
