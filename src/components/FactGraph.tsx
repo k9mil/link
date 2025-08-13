@@ -161,7 +161,7 @@ const Node = ({ node, onClick }: NodeProps) => {
   const getColor = () => {
     switch (node.status) {
       case 'verified': return '#22c55e';
-      case 'ambiguous': return '#FFA500';
+      case 'ambiguous': return '#FF8C00';
       case 'unverified': return '#ef4444';
       default: return '#6b7280';
     }
@@ -209,13 +209,14 @@ const FactGraph = () => {
 
   return (
     <div className="relative w-full h-[600px] bg-background rounded-lg border overflow-hidden">
-      {/* Subtle hero pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5"></div>
+      {/* Visible hero pattern */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/8"></div>
         <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
-                           radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
-                           radial-gradient(circle at 40% 40%, rgba(120, 199, 255, 0.15) 0%, transparent 50%)`
+          backgroundImage: `
+            radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 50% 100%, rgba(236, 72, 153, 0.06) 0%, transparent 70%)`
         }}></div>
       </div>
       
@@ -247,45 +248,47 @@ const FactGraph = () => {
 
       {/* Details Panel */}
       {selectedNode && (
-        <div className="absolute top-4 left-4 w-96 bg-card border rounded-lg p-6 shadow-lg max-h-[500px] overflow-y-auto">
-          <div className="flex items-center gap-3 mb-4">
-            <div 
-              className={`w-4 h-4 rounded-full ${
-                selectedNode.status === 'verified' ? 'bg-verified' :
-                selectedNode.status === 'ambiguous' ? 'bg-ambiguous' : 'bg-unverified'
-              }`}
-            />
-            <span className="font-semibold capitalize text-lg">{selectedNode.status}</span>
-          </div>
-          
-          <h3 className="font-bold text-xl mb-4">{selectedNode.title}</h3>
-          
-          <div className="prose prose-sm max-w-none mb-6 leading-relaxed">
-            <ReactMarkdown>{selectedNode.info}</ReactMarkdown>
-          </div>
-          
-          <div className="border-t pt-4">
-            <h4 className="font-semibold text-base mb-3">Sources:</h4>
-            <ul className="space-y-2">
-              {selectedNode.sources.map((source, i) => (
-                <li key={i} className="flex items-start">
-                  <span className="text-muted-foreground mr-2">•</span>
-                  <a 
-                    href={source.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 underline text-sm leading-relaxed"
-                  >
-                    {source.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+        <div className="absolute top-6 left-6 w-96 bg-card/95 backdrop-blur-sm border rounded-xl shadow-xl max-h-[500px] overflow-y-auto">
+          <div className="p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div 
+                className={`w-4 h-4 rounded-full ${
+                  selectedNode.status === 'verified' ? 'bg-verified' :
+                  selectedNode.status === 'ambiguous' ? 'bg-ambiguous' : 'bg-unverified'
+                }`}
+              />
+              <span className="font-semibold capitalize text-lg">{selectedNode.status}</span>
+            </div>
+            
+            <h3 className="font-bold text-xl mb-6">{selectedNode.title}</h3>
+            
+            <div className="prose prose-sm max-w-none mb-8 leading-relaxed space-y-4">
+              <ReactMarkdown>{selectedNode.info}</ReactMarkdown>
+            </div>
+            
+            <div className="border-t pt-6">
+              <h4 className="font-semibold text-base mb-4">Sources:</h4>
+              <ul className="space-y-3">
+                {selectedNode.sources.map((source, i) => (
+                  <li key={i} className="flex items-start">
+                    <span className="text-muted-foreground mr-3 mt-1">•</span>
+                    <a 
+                      href={source.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 underline text-sm leading-relaxed flex-1"
+                    >
+                      {source.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
           
           <button
             onClick={() => setSelectedNode(null)}
-            className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted rounded-full transition-colors"
+            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-full transition-colors"
           >
             ✕
           </button>
