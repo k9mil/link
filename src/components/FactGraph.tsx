@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Text } from '@react-three/drei';
+import { OrbitControls, Text, Line } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Mock moon landing data with connections
@@ -77,22 +77,16 @@ const Node = ({ node, onClick }: NodeProps) => {
   );
 };
 
-// Connection line component
+// Connection line component using drei's Line
 const ConnectionLine = ({ from, to }: { from: [number, number, number], to: [number, number, number] }) => {
-  const points = [new THREE.Vector3(...from), new THREE.Vector3(...to)];
-  
   return (
-    <line>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={points.length}
-          array={new Float32Array(points.flatMap(p => [p.x, p.y, p.z]))}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <lineBasicMaterial color="#6b7280" opacity={0.3} transparent />
-    </line>
+    <Line
+      points={[from, to]}
+      color="#6b7280"
+      lineWidth={1}
+      opacity={0.3}
+      transparent
+    />
   );
 };
 
