@@ -161,7 +161,7 @@ const Node = ({ node, onClick }: NodeProps) => {
   const getColor = () => {
     switch (node.status) {
       case 'verified': return '#22c55e';
-      case 'ambiguous': return '#ff9f00';
+      case 'ambiguous': return '#FFA500';
       case 'unverified': return '#ef4444';
       default: return '#6b7280';
     }
@@ -208,7 +208,17 @@ const FactGraph = () => {
   const [selectedNode, setSelectedNode] = useState<typeof mockNodes[0] | null>(null);
 
   return (
-    <div className="relative w-full h-[600px] bg-background rounded-lg border">
+    <div className="relative w-full h-[600px] bg-background rounded-lg border overflow-hidden">
+      {/* Subtle hero pattern */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5"></div>
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+                           radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+                           radial-gradient(circle at 40% 40%, rgba(120, 199, 255, 0.15) 0%, transparent 50%)`
+        }}></div>
+      </div>
+      
       <Canvas camera={{ position: [6, 6, 6], fov: 50 }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />

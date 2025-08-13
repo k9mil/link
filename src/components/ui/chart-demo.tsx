@@ -27,8 +27,9 @@ const chartConfig = {
 
 export function FactsChart() {
   return (
-    <ChartContainer config={chartConfig} className="h-[300px]">
-      <ResponsiveContainer width="100%" height="100%">
+    <div className="w-full h-[300px] overflow-hidden">
+      <ChartContainer config={chartConfig} className="h-full w-full">
+        <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data}>
           <XAxis dataKey="month" />
           <YAxis />
@@ -59,6 +60,7 @@ export function FactsChart() {
           />
         </AreaChart>
       </ResponsiveContainer>
-    </ChartContainer>
+      </ChartContainer>
+    </div>
   );
 }
