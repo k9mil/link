@@ -1,16 +1,130 @@
 import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text, Line } from '@react-three/drei';
+import ReactMarkdown from 'react-markdown';
 import * as THREE from 'three';
 
 // Mock moon landing data with connections
 const mockNodes = [
-  { id: 1, title: "Apollo 11 Launch Date", position: [0, 0, 0] as [number, number, number], status: "verified", info: "Apollo 11 launched on July 16, 1969 from Kennedy Space Center at 13:32 UTC. The mission was the culmination of the Apollo program and represented humanity's first attempt to land on the Moon. The launch vehicle was a Saturn V rocket, standing 363 feet tall and weighing 6.2 million pounds when fully fueled.", sources: ["NASA Archives", "Historical Records", "Kennedy Space Center Logs"] },
-  { id: 2, title: "Neil Armstrong First Steps", position: [-3, 2, 1] as [number, number, number], status: "verified", info: "Neil Armstrong was the first human to step onto the lunar surface on July 20, 1969 at 20:17 UTC. His famous words 'That's one small step for man, one giant leap for mankind' were transmitted to Earth and heard by an estimated 650 million people worldwide. The moment was captured on video and transmitted via the lunar module's camera.", sources: ["NASA Transcripts", "Video Evidence", "Mission Audio Logs", "TV Broadcast Records"] },
-  { id: 3, title: "Lunar Module Landing", position: [2, -1, -2] as [number, number, number], status: "verified", info: "The Eagle lunar module successfully landed in the Sea of Tranquility at coordinates 0°40′27″N 23°28′23″E on July 20, 1969. The landing was manually piloted by Neil Armstrong after the automatic guidance system was taking them toward a boulder field. They had only 17 seconds of fuel remaining when they touched down.", sources: ["Mission Control Logs", "Lunar Landing Telemetry", "Post-Mission Reports"] },
-  { id: 4, title: "Shadows Direction", position: [-2, -2, 3] as [number, number, number], status: "ambiguous", info: "Some photographs from the lunar surface show shadows that appear to point in different directions, leading to debates about lighting sources. While conspiracy theorists claim this proves studio lighting, scientists explain this is due to the uneven lunar surface, multiple light sources (Earth reflection, lunar module), and the lack of atmospheric scattering on the Moon.", sources: ["Photo Analysis Studies", "Lunar Photography Research", "Optics Experts"] },
-  { id: 5, title: "Flag Movement", position: [3, 3, -1] as [number, number, number], status: "ambiguous", info: "The American flag planted on the lunar surface appears to wave in some footage, despite the Moon's lack of atmosphere. NASA explains this movement was caused by the astronauts' manipulation of the flagpole and the flag's horizontal support rod. The flag's apparent movement stops when the astronauts stop touching the pole.", sources: ["NASA Technical Reports", "Physics Analysis", "Video Frame Analysis"] },
-  { id: 6, title: "Studio Recording Theory", position: [-4, 1, -3] as [number, number, number], status: "unverified", info: "Claims that the moon landing was filmed in a studio, possibly directed by Stanley Kubrick. These theories cite various 'anomalies' in the footage and photographs. However, extensive analysis by independent researchers, the existence of retroreflectors placed on the Moon, and the sheer complexity of faking the evidence in 1969 make this highly implausible.", sources: ["Conspiracy Theory Websites", "Debunking Studies", "Independent Research"] },
+  { 
+    id: 1, 
+    title: "Apollo 11 Launch Date", 
+    position: [0, 0, 0] as [number, number, number], 
+    status: "verified", 
+    info: `**Apollo 11 launched on July 16, 1969** from Kennedy Space Centre at 13:32 UTC. 
+
+The mission was the culmination of the Apollo programme and represented humanity's first attempt to land on the Moon. The launch vehicle was a **Saturn V rocket**, standing 363 feet tall and weighing 6.2 million pounds when fully fuelled.
+
+### Key Details:
+- **Launch time**: 13:32:00 UTC
+- **Mission duration**: 8 days, 3 hours, 18 minutes
+- **Crew**: Neil Armstrong, Buzz Aldrin, Michael Collins`, 
+    sources: [
+      { name: "NASA Archives", url: "https://www.nasa.gov/mission_pages/apollo/apollo11.html" },
+      { name: "Historical Records", url: "https://history.nasa.gov/ap11ann/introduction.htm" },
+      { name: "Kennedy Space Centre Logs", url: "https://www.kennedyspacecenter.com/apollo-11" }
+    ]
+  },
+  { 
+    id: 2, 
+    title: "Neil Armstrong First Steps", 
+    position: [-3, 2, 1] as [number, number, number], 
+    status: "verified", 
+    info: `**Neil Armstrong was the first human to step onto the lunar surface** on July 20, 1969 at 20:17 UTC.
+
+His famous words *"That's one small step for man, one giant leap for mankind"* were transmitted to Earth and heard by an estimated 650 million people worldwide. The moment was captured on video and transmitted via the lunar module's camera.
+
+### Technical Details:
+- **EVA duration**: 2 hours, 31 minutes
+- **Surface time**: 21 hours, 36 minutes
+- **Samples collected**: 21.5 kg of lunar material`, 
+    sources: [
+      { name: "NASA Transcripts", url: "https://www.nasa.gov/history/alsj/a11/a11.step.html" },
+      { name: "Video Evidence", url: "https://apolloinrealtime.org/11/" },
+      { name: "Mission Audio Logs", url: "https://www.nasa.gov/connect/sounds/apollo_sounds.html" },
+      { name: "TV Broadcast Records", url: "https://www.nasa.gov/multimedia/apollo11_neil.html" }
+    ]
+  },
+  { 
+    id: 3, 
+    title: "Lunar Module Landing", 
+    position: [2, -1, -2] as [number, number, number], 
+    status: "verified", 
+    info: `**The Eagle lunar module successfully landed** in the Sea of Tranquillity at coordinates 0°40'27"N 23°28'23"E on July 20, 1969.
+
+The landing was manually piloted by Neil Armstrong after the automatic guidance system was taking them towards a boulder field. They had only **17 seconds of fuel remaining** when they touched down.
+
+### Landing Sequence:
+1. **Powered descent**: 12 minutes, 36 seconds
+2. **Manual control**: Final 25 seconds  
+3. **Touchdown**: "The Eagle has landed"`, 
+    sources: [
+      { name: "Mission Control Logs", url: "https://www.nasa.gov/mission_pages/apollo/missions/apollo11.html" },
+      { name: "Lunar Landing Telemetry", url: "https://apolloinrealtime.org/11/?t=102:45:17" },
+      { name: "Post-Mission Reports", url: "https://www.nasa.gov/centers/dryden/pdf/87793main_H-2465.pdf" }
+    ]
+  },
+  { 
+    id: 4, 
+    title: "Shadows Direction", 
+    position: [-2, -2, 3] as [number, number, number], 
+    status: "ambiguous", 
+    info: `Some photographs from the lunar surface show **shadows that appear to point in different directions**, leading to debates about lighting sources.
+
+While conspiracy theorists claim this proves studio lighting, scientists explain this is due to:
+- The **uneven lunar surface** creating complex shadow patterns
+- **Multiple light sources** (Earth reflection, lunar module)
+- The **lack of atmospheric scattering** on the Moon
+
+### Scientific Analysis:
+> *"The varying shadow directions are entirely consistent with the lunar environment and multiple light sources."* - Dr. Phil Plait, Astronomer`, 
+    sources: [
+      { name: "Photo Analysis Studies", url: "https://www.badastronomy.com/bad/tv/foxapollo.html" },
+      { name: "Lunar Photography Research", url: "https://www.hq.nasa.gov/alsj/a11/images11.html" },
+      { name: "Optics Experts", url: "https://www.clavius.org/light.html" }
+    ]
+  },
+  { 
+    id: 5, 
+    title: "Flag Movement", 
+    position: [3, 3, -1] as [number, number, number], 
+    status: "ambiguous", 
+    info: `The **American flag planted on the lunar surface** appears to wave in some footage, despite the Moon's lack of atmosphere.
+
+**NASA's explanation:**
+- Movement caused by astronauts' manipulation of the flagpole
+- The flag's horizontal support rod creating tension
+- **No air resistance** to dampen movement once started
+
+The flag's apparent movement stops when the astronauts stop touching the pole, which is **consistent with physics** in a vacuum environment.`, 
+    sources: [
+      { name: "NASA Technical Reports", url: "https://www.nasa.gov/audience/forstudents/5-8/features/nasa-knows/what-is-apollo-program-58.html" },
+      { name: "Physics Analysis", url: "https://www.physicscentral.com/explore/action/apollo.cfm" },
+      { name: "Video Frame Analysis", url: "https://apolloinrealtime.org/11/?t=109:24:15" }
+    ]
+  },
+  { 
+    id: 6, 
+    title: "Studio Recording Theory", 
+    position: [-4, 1, -3] as [number, number, number], 
+    status: "unverified", 
+    info: `**Claims that the moon landing was filmed in a studio**, possibly directed by Stanley Kubrick.
+
+These theories cite various "anomalies" in the footage and photographs. However, extensive analysis by independent researchers shows:
+
+### Evidence Against:
+- **Retroreflectors** placed on the Moon (still used today)
+- **Sheer complexity** of faking evidence in 1969
+- **Independent verification** by multiple countries
+- **Technological impossibility** of creating such footage in 1969
+
+> *"The technology to fake the moon landings didn't exist in 1969."* - Film experts`, 
+    sources: [
+      { name: "Conspiracy Theory Websites", url: "https://www.conspiracytheories.com/moon-landing" },
+      { name: "Debunking Studies", url: "https://www.clavius.org/" },
+      { name: "Independent Research", url: "https://www.snopes.com/fact-check/moon-landing-conspiracy-theory/" }
+    ]
+  },
 ];
 
 // Connections between related nodes
@@ -47,7 +161,7 @@ const Node = ({ node, onClick }: NodeProps) => {
   const getColor = () => {
     switch (node.status) {
       case 'verified': return '#22c55e';
-      case 'ambiguous': return '#ff9500';
+      case 'ambiguous': return '#ff9f00';
       case 'unverified': return '#ef4444';
       default: return '#6b7280';
     }
@@ -123,7 +237,7 @@ const FactGraph = () => {
 
       {/* Details Panel */}
       {selectedNode && (
-        <div className="absolute top-4 left-4 w-80 bg-card border rounded-lg p-4 shadow-lg">
+        <div className="absolute top-4 left-4 w-96 bg-card border rounded-lg p-4 shadow-lg max-h-[500px] overflow-y-auto">
           <div className="flex items-center gap-2 mb-3">
             <div 
               className={`w-3 h-3 rounded-full ${
@@ -133,13 +247,26 @@ const FactGraph = () => {
             />
             <span className="font-semibold capitalize">{selectedNode.status}</span>
           </div>
-          <h3 className="font-bold text-lg mb-2">{selectedNode.title}</h3>
-          <p className="text-sm text-muted-foreground mb-3">{selectedNode.info}</p>
+          <h3 className="font-bold text-lg mb-3">{selectedNode.title}</h3>
+          
+          <div className="prose prose-sm max-w-none mb-4">
+            <ReactMarkdown>{selectedNode.info}</ReactMarkdown>
+          </div>
+          
           <div>
-            <h4 className="font-medium mb-1">Sources:</h4>
-            <ul className="text-sm text-muted-foreground">
+            <h4 className="font-medium mb-2">Sources:</h4>
+            <ul className="space-y-1">
               {selectedNode.sources.map((source, i) => (
-                <li key={i}>• {source}</li>
+                <li key={i}>
+                  <a 
+                    href={source.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sm text-blue-600 hover:text-blue-800 underline"
+                  >
+                    {source.name}
+                  </a>
+                </li>
               ))}
             </ul>
           </div>

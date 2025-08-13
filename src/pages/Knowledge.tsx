@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,13 +9,14 @@ import { useToast } from "@/hooks/use-toast";
 const Knowledge = () => {
   const [inputText, setInputText] = useState("");
   const [showGraph, setShowGraph] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  const handleAnalyze = () => {
+  const handleAnalyse = () => {
     if (!inputText.trim()) {
       toast({
         title: "Input required",
-        description: "Please enter text to analyze",
+        description: "Please enter text to analyse",
         variant: "destructive"
       });
       return;
@@ -27,38 +28,60 @@ const Knowledge = () => {
     });
   };
 
+  const handleFileUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      toast({
+        title: "File uploaded",
+        description: `Processing ${file.name}...`
+      });
+      setShowGraph(true);
+    }
+  };
+
   return (
     <div className="min-h-screen hero-gradient">
       <div className="container mx-auto p-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Knowledge Graph</h1>
-          <p className="text-muted-foreground">Analyze text and generate interactive fact verification graphs</p>
+          <p className="text-muted-foreground">Analyse text and generate interactive fact verification graphs</p>
         </div>
 
         {/* Input Section */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Analyze Text or Upload File</CardTitle>
+            <CardTitle>Analyse Text or Upload File</CardTitle>
             <CardDescription>
               Enter text about any topic for fact verification and knowledge graph generation
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <Textarea
-              placeholder="Enter text to analyze... (e.g., 'The Apollo 11 mission landed on the moon in 1969. Neil Armstrong was the first person to walk on the lunar surface.')"
+              placeholder="Enter text to analyse... (e.g., 'The Apollo 11 mission landed on the moon in 1969. Neil Armstrong was the first person to walk on the lunar surface.')"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               className="min-h-[120px]"
             />
             <div className="flex gap-4">
-              <Button onClick={handleAnalyze} className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button onClick={handleAnalyse} className="bg-primary text-primary-foreground hover:bg-primary/90">
                 <FileText className="mr-2 h-4 w-4" />
-                Analyze Text
+                Analyse Text
               </Button>
-              <Button variant="outline">
+              <Button variant="outline" onClick={handleFileUpload}>
                 <Upload className="mr-2 h-4 w-4" />
                 Upload File
               </Button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                onChange={handleFileChange}
+                accept=".txt,.pdf,.doc,.docx,.md"
+                className="hidden"
+              />
             </div>
           </CardContent>
         </Card>

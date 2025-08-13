@@ -5,9 +5,12 @@ import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/10 pointer-events-none" />
+      
       {/* Hero Section */}
-      <section className="hero-gradient py-20 px-4">
+      <section className="hero-gradient py-20 px-4 relative z-10">
         <div className="container mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
             Link
@@ -30,12 +33,12 @@ const Landing = () => {
       </section>
 
       {/* Features */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 relative z-10">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-4">Multi-Agent Research Architecture</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Each information node is powered by its own specialized AI agent, creating a distributed 
+              Each information node is powered by its own specialised AI agent, creating a distributed 
               research network that ensures comprehensive fact verification.
             </p>
           </div>
@@ -43,8 +46,8 @@ const Landing = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="card-gradient">
               <CardHeader>
-                <Upload className="h-12 w-12 text-primary mb-4" />
-                <CardTitle>Intelligent Data Ingestion</CardTitle>
+                <Upload className="h-12 w-12 text-primary mb-6" />
+                <CardTitle className="mb-3">Intelligent Data Ingestion</CardTitle>
                 <CardDescription>
                   Upload documents, articles, or research papers. Our system automatically extracts 
                   and structures factual claims for multi-agent analysis.
@@ -54,19 +57,19 @@ const Landing = () => {
             
             <Card className="card-gradient">
               <CardHeader>
-                <Eye className="h-12 w-12 text-primary mb-4" />
-                <CardTitle>3D Knowledge Networks</CardTitle>
+                <Eye className="h-12 w-12 text-primary mb-6" />
+                <CardTitle className="mb-3">3D Knowledge Networks</CardTitle>
                 <CardDescription>
-                  Visualize complex information relationships through interactive 3D graphs. 
-                  Each node represents a fact verified by specialized research agents.
+                  Visualise complex information relationships through interactive 3D graphs. 
+                  Each node represents a fact verified by specialised research agents.
                 </CardDescription>
               </CardHeader>
             </Card>
             
             <Card className="card-gradient">
               <CardHeader>
-                <CheckCircle className="h-12 w-12 text-primary mb-4" />
-                <CardTitle>Distributed Verification</CardTitle>
+                <CheckCircle className="h-12 w-12 text-primary mb-6" />
+                <CardTitle className="mb-3">Distributed Verification</CardTitle>
                 <CardDescription>
                   Multiple AI agents independently research each claim, cross-referencing sources 
                   and providing confidence scores for every piece of information.
@@ -78,7 +81,7 @@ const Landing = () => {
       </section>
 
       {/* How it Works */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="py-20 px-4 bg-muted/30 relative z-10">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-4">How Multi-Agent Research Works</h2>
@@ -102,7 +105,7 @@ const Landing = () => {
                 <span className="text-2xl font-bold text-primary">2</span>
               </div>
               <h3 className="font-semibold mb-2">Agent Assignment</h3>
-              <p className="text-sm text-muted-foreground">Each fact gets assigned to a specialized research agent</p>
+              <p className="text-sm text-muted-foreground">Each fact gets assigned to a specialised research agent</p>
             </div>
             
             <div className="text-center">
@@ -118,14 +121,14 @@ const Landing = () => {
                 <span className="text-2xl font-bold text-primary">4</span>
               </div>
               <h3 className="font-semibold mb-2">Knowledge Graph</h3>
-              <p className="text-sm text-muted-foreground">Results are visualized in an interactive 3D network</p>
+              <p className="text-sm text-muted-foreground">Results are visualised in an interactive 3D network</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 border-t">
+      <footer className="py-12 px-4 border-t relative z-10">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>

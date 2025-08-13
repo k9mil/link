@@ -37,7 +37,7 @@
     /* Status colors for verification */
     --verified: 142 76% 36%;
     --verified-foreground: 0 0% 100%;
-    --ambiguous: 25 100% 65%;
+    --ambiguous: 25 100% 70%;
     --ambiguous-foreground: 0 0% 100%;
     --unverified: 0 84% 60%;
     --unverified-foreground: 0 0% 100%;
@@ -94,7 +94,7 @@
 
     --verified: 142 70% 45%;
     --verified-foreground: 0 0% 100%;
-    --ambiguous: 25 95% 75%;
+    --ambiguous: 25 95% 80%;
     --ambiguous-foreground: 0 0% 0%;
     --unverified: 0 75% 65%;
     --unverified-foreground: 0 0% 100%;
