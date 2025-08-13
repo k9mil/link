@@ -51,7 +51,7 @@ const Knowledge = () => {
               className="min-h-[120px]"
             />
             <div className="flex gap-4">
-              <Button onClick={handleAnalyze} className="primary-gradient text-white">
+              <Button onClick={handleAnalyze} className="bg-primary text-primary-foreground hover:bg-primary/90">
                 <FileText className="mr-2 h-4 w-4" />
                 Analyze Text
               </Button>

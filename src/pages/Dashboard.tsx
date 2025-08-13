@@ -1,6 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, AlertTriangle, XCircle, TrendingUp, FileText, Users, Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CheckCircle, AlertTriangle, XCircle, TrendingUp, FileText, Users, Calendar, Network } from "lucide-react";
 import { FactsChart } from "@/components/ui/chart-demo";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   return (
@@ -112,6 +114,26 @@ const Dashboard = () => {
             </CardContent>
           </Card>
         </div>
+
+        {/* Quick Actions */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Quick Actions</CardTitle>
+            <CardDescription>Start analyzing content and explore your research network</CardDescription>
+          </CardHeader>
+          <CardContent className="flex gap-4">
+            <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Link to="/knowledge">
+                <Network className="mr-2 h-4 w-4" />
+                Create Knowledge Graph
+              </Link>
+            </Button>
+            <Button variant="outline">
+              <FileText className="mr-2 h-4 w-4" />
+              Upload Document
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

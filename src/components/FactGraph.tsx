@@ -47,7 +47,7 @@ const Node = ({ node, onClick }: NodeProps) => {
   const getColor = () => {
     switch (node.status) {
       case 'verified': return '#22c55e';
-      case 'ambiguous': return '#ff8c00';
+      case 'ambiguous': return '#ff9500';
       case 'unverified': return '#ef4444';
       default: return '#6b7280';
     }
@@ -95,7 +95,7 @@ const FactGraph = () => {
 
   return (
     <div className="relative w-full h-[600px] bg-background rounded-lg border">
-      <Canvas camera={{ position: [5, 5, 5], fov: 60 }}>
+      <Canvas camera={{ position: [6, 6, 6], fov: 50 }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
         <OrbitControls />
