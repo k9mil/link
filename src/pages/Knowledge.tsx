@@ -22,7 +22,7 @@ import {
   TrendingUp,
   Activity,
 } from "lucide-react";
-import FactGraph from "@/components/FactGraph";
+import FactGraph from "@/components/Link";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 
