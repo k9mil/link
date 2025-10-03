@@ -1,6 +1,8 @@
-## Introduction
+# Introduction
 
-During the AI Builders Glasgow 2025 hackathon, we built Link, a PoC that breaks down any structured or unstructured data into atomic claims with color-coded truth verification, creating an intelligent fact-checking system with three-dimensional graphs for which we got 1st place 🥇.
+During the AI Builders Glasgow 2025 2-hour hackathon, we built _Link_, a PoC that breaks down any structured or unstructured data into atomic claims with color-coded truth verification, creating an intelligent fact-checking system with three-dimensional graphs for which we got 1st place 🥇.
+
+The entire product was built with Lovable.
 
 ![Link Product](https://github.com/user-attachments/assets/fde8c915-ed8c-4c7e-8ae2-4963dfaae026)
 
