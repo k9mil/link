@@ -2,7 +2,11 @@
 
 During the AI Builders Glasgow 2025 hackathon, we built Link, a PoC that breaks down any structured or unstructured data into atomic claims with color-coded truth verification, creating an intelligent fact-checking system with three-dimensional graphs for which we got 1st place 🥇.
 
-https://github.com/user-attachments/assets/fde8c915-ed8c-4c7e-8ae2-4963dfaae026
+<div style="position: relative; width: 100%;">
+  <img src="
+https://github.com/user-attachments/assets/fde8c915-ed8c-4c7e-8ae2-4963dfaae026" alt="Link Product" style="width: 100%; display: block;">
+  <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 35%; background: linear-gradient(to bottom, transparent, white); pointer-events: none;"></div>
+</div>
 
 ## Tech Stack
 
